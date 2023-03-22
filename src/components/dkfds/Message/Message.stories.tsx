@@ -5,7 +5,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Message from './Message';
 
 export default {
-    title: 'Message',
+    title: 'DKFDS/Message',
     component: Message,
 } as ComponentMeta<typeof Message>
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Message from './components/Message';
+import Message from './components/dkfds/Message/Message';
+
 
 function App() {
   return (
-      <Message ></Message>
+    <Message ></Message>
   );
 }
 

@@ -7,6 +7,27 @@ on:
       - dev
 
 jobs:
+  static-page:
+    name: Create static storybook page
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Add plugin for conventional commits
+      run: npm install conventional-changelog-conventionalcommits --force
+      working-directory: ./.github/workflows
+
+    - name: NPM Install
+      run: npm ci --force
+
+    - name: Create static Storybook for Github Pages
+      run: npm build-storybook | npm deploy-storybook
+
   release:
     name: Release
     runs-on: ubuntu-latest

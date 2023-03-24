@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches: 
+      - main
+      - dev
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Add plugin for conventional commits
+      run: npm install conventional-changelog-conventionalcommits --force
+      working-directory: ./.github/workflows
+
+    - name: NPM Install
+      run: npm ci --force
+
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GIT_AUTHOR_NAME: pksorensen
+        GIT_AUTHOR_EMAIL: poul@kjeldager.com
+      run: npx semantic-release
+
+    #- name: Release EAVFW/Apps
+    #  working-directory: ./packages/apps
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    #    GIT_AUTHOR_NAME: pksorensen
+    #    GIT_AUTHOR_EMAIL: poul@kjeldager.com
+    #  run: npx semantic-release
+
+    #- name: Release EAVFW/Expressions
+    #  working-directory: ./packages/expressions
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    #    GIT_AUTHOR_NAME: pksorensen
+    #    GIT_AUTHOR_EMAIL: poul@kjeldager.com
+    #  run: npx semantic-release
